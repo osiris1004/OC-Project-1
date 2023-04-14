@@ -1,0 +1,36 @@
+
+<div>
+    <div class="heading">
+        <div class="center">
+            <div>Name of the country</div>
+        </div>
+        <div class="split">
+            <div>
+                <p>Number of entries</p>
+                <p>{{totalEntries}}</p>
+            </div>
+
+            <div>
+                <p>Total Number of medals</p>
+                <p>{{totalMedals}}</p>
+            </div>
+
+            <div>
+                <p>Total Number of athletes</p>
+                <p>{{totalAthletes}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="chart-container">
+        <canvas  id="MyLineChart" >{{ lineChart }}</canvas>
+    </div>
+    
+    <div class="chart-container">
+        <canvas  id="MyBarChart" >{{ barChart }}</canvas>
+    </div>
+
+    <div class="center">
+        <a routerLink="" >Go back</a>
+      </div>
+</div>
