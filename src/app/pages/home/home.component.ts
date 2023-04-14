@@ -12,26 +12,29 @@ import { OlympicService } from 'src/app/core/services/olympic.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  public olympics$: Observable<any> = of(null);
+
+  
+  public pieChart!: Chart<"pie", number[], string>;
+  public totalCountries : number = 0
+  public totalJOs : number = 0
 
   constructor(private olympicService: OlympicService, private route: Router) { }
 
   ngOnInit(): void {
-    this.olympics$ = this.olympicService.getOlympics();
-    console.log(this.olympicService.getOlympics())
-    this.olympicService.getOlympics().forEach(i => {
+    this.olympicService.getOlympics().subscribe(i => {
+
+      console.log(i)
 
       if (i && i.length > 0) {
-        // get country value
+
         const countries: string[] = i.map((i: ICountry) => i.country) 
 
         this.totalCountries = countries.length
 
-        // get country value
-        const medals: [number[]] = i.map((i: ICountry) => i.participations
+        const medals  = i.map((i: ICountry) => i.participations
           .map((i: IParticipation) => (i.medalsCount)))
 
-          //get the numbers of medals for each country they made in alls years  
+
         const sumOfAllMedalsYears = medals.map(i => i.reduce((acc, i) => acc + i, 0))                            
         this.createPieChart(countries, sumOfAllMedalsYears);
       }
@@ -39,19 +42,13 @@ export class HomeComponent implements OnInit {
 
   }
 
-  //!
-  public pieChart!: Chart<"pie", number[], string>;
-  public totalCountries : number = 0
-  public totalJOs : number = 0
 
 
-
-  //!
   createPieChart(countries: string[], sumOfAllMedalsYears: number[]) {
     const pieChart = new Chart("MyPieChart", {
-      type: 'pie', //this denotes tha type of pieChart
+      type: 'pie', 
 
-      data: {// values on X-Axis
+      data: {
         labels: countries,
         datasets: [{
           label: 'Medals',
@@ -76,7 +73,6 @@ export class HomeComponent implements OnInit {
               const firstPoint = points[0];
               const label = pieChart.data.labels ? pieChart.data.labels[firstPoint.index] : ''
               const value = pieChart.data.datasets[firstPoint.datasetIndex].data[firstPoint.index]
-              //alert(label + " : " + value)
               this.route.navigate(['detail', label])
             }
           }

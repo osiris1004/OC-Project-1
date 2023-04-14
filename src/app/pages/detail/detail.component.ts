@@ -12,6 +12,12 @@ import { OlympicService } from 'src/app/core/services/olympic.service';
 })
 export class DetailComponent implements OnInit {
 
+  public lineChart!:  Chart<"line", string[], number>;
+  public lineChart_2!:  Chart<"line", string[], number>;
+  public totalEntries : number = 0
+  public totalMedals : number = 0
+  public totalAthletes : number = 0
+
   constructor(private olympicService: OlympicService, private route : ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -22,25 +28,26 @@ export class DetailComponent implements OnInit {
 
     this.olympicService.getOlympics().forEach(i => {
       if (i && i.length > 0) {
-        const selectedCountry : ICountry = i.find((i: ICountry) => i.country === country) // 
+        const selectedCountry  = i.find((i: ICountry) => i.country === country) // 
       console.log({selectedCountry})                             
 
-        const participations = selectedCountry.participations.map((i: IParticipation)=>i)
-        this.totalEntries = participations.length
+        const participations = selectedCountry?.participations.map((i: IParticipation)=>i)
+        this.totalEntries = participations?.length ?? 0
         //#years
-        const years = selectedCountry.participations.map((i: IParticipation)=>i.year)
+        const years = selectedCountry?.participations.map((i: IParticipation)=>i.year) ?? []
 
         //medals
-        const medals = selectedCountry.participations.map((i: IParticipation)=>i.medalsCount.toString())
+        const medals = selectedCountry?.participations.map((i: IParticipation)=>i.medalsCount.toString()) ?? []
         this.totalMedals = medals.reduce((accumulator, item)=>accumulator + parseInt(item), 0)
 
         //#athletes
-        const athletes = selectedCountry.participations.map((i: IParticipation)=>i.athleteCount.toString())
+        const athletes = selectedCountry?.participations.map((i: IParticipation)=>i.athleteCount.toString()) ?? []
         this.totalAthletes = athletes.reduce((accumulator, item)=>accumulator + parseInt(item), 0)
 
 
         this.createLineChart(years, medals, athletes)
-        this.createBarChart(years, medals, athletes)
+        this.createLineChart_2(years, medals)
+     
       }
        
     
@@ -51,11 +58,7 @@ export class DetailComponent implements OnInit {
   
 
 
-  public lineChart!:  Chart<"line", string[], number>;
-  public barChart!: Chart<"bar", string[], number>;
-  public totalEntries : number = 0
-  public totalMedals : number = 0
-  public totalAthletes : number = 0
+
 
 
   createLineChart(years :number[], medals:string[], athletes:string[]){
@@ -66,7 +69,6 @@ export class DetailComponent implements OnInit {
       data: {// values on X-Axis
         labels: years, 
 	       datasets: [
-          
           {
             label: "medals",
             data: medals,
@@ -90,12 +92,12 @@ export class DetailComponent implements OnInit {
 
 
   
-  createBarChart(years :number[], medals:string[], athletes:string[]){
+  createLineChart_2(years :number[], medals:string[]){
   
-    const barChart = new Chart("MyBarChart", {
-      type: 'bar', //this denotes tha type of chart
+    const lineChart = new Chart("MyLineChart_2", {
+      type: 'line', 
 
-      data: {// values on X-Axis
+      data: {
         labels: years, 
 	       datasets: [
           
@@ -103,7 +105,8 @@ export class DetailComponent implements OnInit {
             label: "medals",
             data: medals,
             backgroundColor: 'yellow'
-          }
+          },
+         
         ]
       },
       options: {
@@ -112,7 +115,7 @@ export class DetailComponent implements OnInit {
       
     });
 
-    this.barChart = barChart
+    this.lineChart_2 = lineChart
   }
 
 }
