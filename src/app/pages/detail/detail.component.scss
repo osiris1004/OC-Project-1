@@ -8,7 +8,7 @@
     margin: 5px;
 
     div {
-        background: green;
+        background: #0b868f;
         padding: 10px;
         border-radius: 10px;
         color: white;
@@ -24,7 +24,7 @@
 
     div {
         padding: 10px;
-        border: solid green 1px;
+        border: solid #0b868f 1px;
         border-radius: 10px;
         color: gray;
         margin: 0px;
@@ -41,17 +41,17 @@
     }
 }
 
-.wrapper-container{
-    display:  flex;
+.wrapper-container {
+    display: flex;
     justify-content: center;
 }
-.container{
+
+.container {
     width: 50%;
 }
 
 @media screen and (max-width: 1000px) {
     .container {
-      width: 100%;
+        width: 100%;
     }
-  }
-
+}
