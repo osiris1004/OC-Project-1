@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import Chart from 'chart.js/auto';
@@ -19,6 +20,7 @@ export class DetailComponent implements OnInit {
   public totalEntries: number = 0;
   public totalMedals: number = 0;
   public totalAthletes: number = 0;
+  public error!: string;
 
   private readonly ngUnsubscribe$: Subject<void> = new Subject<void>();
 
@@ -31,30 +33,34 @@ export class DetailComponent implements OnInit {
     this.route.paramMap.subscribe((param: ParamMap) => country = param.get('country'))
 
     this.olympicService.getOlympics()
-      .pipe(takeUntil(this.ngUnsubscribe$)).subscribe(i => {
-        if (i && i.length > 0) {
-          const selectedCountry = i.find((i: ICountry) => i.country === country) //      
-          this.countryName = selectedCountry?.country ?? null
+      .pipe(takeUntil(this.ngUnsubscribe$)).subscribe(
+        (data) => {
+          if (data && data.length > 0) {
+            const selectedCountry = data.find((i: ICountry) => i.country === country) //      
+            this.countryName = selectedCountry?.country ?? null
 
-          const participations = selectedCountry?.participations.map((i: IParticipation) => i)
-          this.totalEntries = participations?.length ?? 0
-          //#years
-          const years = selectedCountry?.participations.map((i: IParticipation) => i.year) ?? []
+            const participations = selectedCountry?.participations.map((i: IParticipation) => i)
+            this.totalEntries = participations?.length ?? 0
+            //#years
+            const years = selectedCountry?.participations.map((i: IParticipation) => i.year) ?? []
 
-          //medals
-          const medals = selectedCountry?.participations.map((i: IParticipation) => i.medalsCount.toString()) ?? []
-          this.totalMedals = medals.reduce((accumulator, item) => accumulator + parseInt(item), 0)
+            //medals
+            const medals = selectedCountry?.participations.map((i: IParticipation) => i.medalsCount.toString()) ?? []
+            this.totalMedals = medals.reduce((accumulator, item) => accumulator + parseInt(item), 0)
 
-          //#athletes
-          const athletes = selectedCountry?.participations.map((i: IParticipation) => i.athleteCount.toString()) ?? []
-          this.totalAthletes = athletes.reduce((accumulator, item) => accumulator + parseInt(item), 0)
+            //#athletes
+            const athletes = selectedCountry?.participations.map((i: IParticipation) => i.athleteCount.toString()) ?? []
+            this.totalAthletes = athletes.reduce((accumulator, item) => accumulator + parseInt(item), 0)
 
 
-          this.createLineChart(years, medals, athletes)
-          this.createLineChart_2(years, medals)
+            this.createLineChart(years, medals, athletes)
+            this.createLineChart_2(years, medals)
 
-        }
-      })
+          }
+        },
+        (error: HttpErrorResponse) => {
+          this.error = error.message
+        })
   }
 
   ngOnDestroy() {

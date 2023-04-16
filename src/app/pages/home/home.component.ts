@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import Chart from 'chart.js/auto';
@@ -16,30 +17,35 @@ export class HomeComponent implements OnInit {
   public pieChart!: Chart<"pie", number[], string>;
   public totalCountries: number = 0
   public totalJOs: number = 0
+  public error!:string
   private readonly ngUnsubscribe$: Subject<void> = new Subject<void>();
 
   constructor(private olympicService: OlympicService, private route: Router) { }
 
   ngOnInit(): void {
     this.olympicService.getOlympics()
-      .pipe(takeUntil(this.ngUnsubscribe$)).subscribe(i => {
+      .pipe(takeUntil(this.ngUnsubscribe$)).subscribe(
+        (data) => {
+          if (data && data.length > 0) {
+            this.totalJOs = Array.from(new Set(data.map(i => i.participations.map(f => f.year)).flat())).length
 
-        if (i && i.length > 0) {
-          this.totalJOs = Array.from(new Set(i.map(i => i.participations.map(f => f.year)).flat())).length
+            const countries: string[] = data.map((i: ICountry) => i.country)
+            this.totalCountries = countries.length
 
-          const countries: string[] = i.map((i: ICountry) => i.country)
-          this.totalCountries = countries.length
+            const medals = data.map((i: ICountry) => i.participations.map((i: IParticipation) => (i.medalsCount)))
+            const sumOfAllMedalsYears = medals.map(i => i.reduce((acc, i) => acc + i, 0))
 
-          const medals = i.map((i: ICountry) => i.participations.map((i: IParticipation) => (i.medalsCount)))
-          const sumOfAllMedalsYears = medals.map(i => i.reduce((acc, i) => acc + i, 0))
-
-          this.createPieChart(countries, sumOfAllMedalsYears);
+            this.createPieChart(countries, sumOfAllMedalsYears);
+          }
+        },
+        (error:HttpErrorResponse) => {
+          this.error = error.message
         }
-      })
+      )
   }
 
   ngOnDestroy() {
-    this.ngUnsubscribe$.next();
+    this.ngUnsubscribe$.next(); //data passed to our subscriber
     this.ngUnsubscribe$.unsubscribe();
   }
 

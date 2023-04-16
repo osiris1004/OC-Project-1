@@ -42,7 +42,7 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 ## Core concepts 
 
 # Memory Leaks
-In RxJS, each time you subscribe to an Observable or a Topic, you must then unsubscribe. If you don't unsubscribe, the subscription will exist in memory, and whenever the subject emits a value, the subscription logic will execute and hence memory leak.
+In RxJS, each time you subscribe to an Observable, you must then unsubscribe. If you don't unsubscribe, the subscription will exist in memory, and whenever the subject emits a value, the subscription logic will execute and hence memory leak.
 
 ## Contact
 Mailto : <a href="mailto:email@example.com, secondemail@example.com">Send Email</a>
