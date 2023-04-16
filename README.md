@@ -1,8 +1,35 @@
-# OlympicGamesStarter
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.1.3.
+![Telesport](/src/assets/images/teleSport.png)
 
-Don't forget to install your node_modules before starting (`npm install`).
+
+# About The Project
+
+Olympic Games Starter, is a small application that provides a dashboard to the user in order to graphically visualize the olympic game statistics of precedence years.
+
+# Built With
+
+This section should list any major frameworks/libraries used in the project. Here are a few examples.
+ - Angular
+ - Chart js
+ - RxJS
+
+# Getting Started
+This is an example of how you may give instructions on setting up your project locally. To get a local copy up and running follow these simple example steps.
+
+## Prerequisites
+This is an example of how to list things you need to use the software and how to install them.
+
+1. Clone the repo
+    >`git clone https://github.com/osiris1004/OC-Project-1.git`
+
+1. Install NPM packages
+    >`npm install`
+
+1. npm
+    >`npm install install`
+
+1. npm
+    >`npm install install`
 
 ## Development server
 
@@ -12,18 +39,13 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The appli
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Where to start
+## Core concepts 
 
-As you can see, an architecture has already been defined for the project. It is just a suggestion, you can choose to use your own. The predefined architecture includes (in addition to the default angular architecture) the following:
+# Memory Leaks
+In RxJS, each time you subscribe to an Observable, you must then unsubscribe. If you don't unsubscribe, the subscription will exist in memory, and whenever the subject emits a value, the subscription logic will execute and hence memory leak.
 
-- `components` folder: contains every reusable components
-- `pages` folder: contains components used for routing
-- `core` folder: contains the business logic (`services` and `models` folders)
+## Contact
+Mailto : <a href="mailto:email@example.com, secondemail@example.com">Send Email</a>
 
-I suggest you to start by understanding this starter code. Pay an extra attention to the `app-routing.module.ts` and the `olympic.service.ts`.
 
-Once mastered, you should continue by creating the typescript interfaces inside the `models` folder. As you can see I already created two files corresponding to the data included inside the `olympic.json`. With your interfaces, improve the code by replacing every `any` by the corresponding interface.
 
-You're now ready to implement the requested features.
-
-Good luck!
