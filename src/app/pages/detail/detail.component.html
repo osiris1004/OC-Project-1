@@ -1,8 +1,7 @@
-
 <div>
     <div class="heading">
         <div class="center">
-            <div>Name of the country</div>
+            <div>{{countryName}}</div>
         </div>
         <div class="split">
             <div>
@@ -22,16 +21,16 @@
         </div>
     </div>
 
-
-    
     <div class="chart-container wrapper-container">
-       <div class="container">
-        <canvas  id="MyLineChart" >{{ lineChart }}</canvas>
-        <canvas  id="MyLineChart_2" >{{ lineChart_2 }}</canvas>
-       </div>
+        <div class="container">
+            <canvas id="MyLineChart">{{ lineChart }}</canvas>
+            <h2 style="text-align:center; color:gray">Date</h2>
+            <canvas id="MyLineChart_2">{{ lineChart_2 }}</canvas>
+            <h2 style="text-align:center; color:gray">Date</h2>
+        </div>
     </div>
 
     <div class="center">
-        <a routerLink="" >Go back</a>
-      </div>
+        <a routerLink="">Go back</a>
+    </div>
 </div>
