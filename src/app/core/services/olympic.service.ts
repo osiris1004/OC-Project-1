@@ -2,7 +2,8 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
-import { ICountry } from '../models/Olympic';
+import { Olympic } from '../models/Olympic';
+
 
 @Injectable({
   providedIn: 'root',
@@ -12,8 +13,8 @@ export class OlympicService {
 
   constructor(private http: HttpClient) { }
 
-  getOlympics() :Observable <ICountry[]> {
-    return this.http.get<ICountry[]>(this.olympicUrl).pipe(
+  getOlympics() :Observable <Olympic[]> {
+    return this.http.get<Olympic[]>(this.olympicUrl).pipe(
       catchError((error: HttpErrorResponse) => {
         if (error.error instanceof ErrorEvent) {
           const errorMessage = `Error : ${error.error.message}`
