@@ -2,9 +2,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import Chart from 'chart.js/auto';
-import { Observable, Subject, Subscription, of, takeUntil } from 'rxjs';
-import { ICountry } from 'src/app/core/models/Olympic';
-import { IParticipation } from 'src/app/core/models/Participation';
+import {Subject, Subscription, takeUntil } from 'rxjs';
+import { Olympic } from 'src/app/core/models/Olympic';
+import { Participation } from 'src/app/core/models/Participation';
 import { OlympicService } from 'src/app/core/services/olympic.service';
 
 @Component({
@@ -18,21 +18,20 @@ export class HomeComponent implements OnInit {
   public totalCountries: number = 0
   public totalJOs: number = 0
   public error!:string
-  private readonly ngUnsubscribe$: Subject<void> = new Subject<void>();
+  private  ngUnsubscribe?: Subscription
 
   constructor(private olympicService: OlympicService, private route: Router) { }
 
   ngOnInit(): void {
-    this.olympicService.getOlympics()
-      .pipe(takeUntil(this.ngUnsubscribe$)).subscribe(
+    this.ngUnsubscribe =this.olympicService.getOlympics().subscribe(
         (data) => {
           if (data && data.length > 0) {
             this.totalJOs = Array.from(new Set(data.map(i => i.participations.map(f => f.year)).flat())).length
 
-            const countries: string[] = data.map((i: ICountry) => i.country)
+            const countries: string[] = data.map((i: Olympic) => i.country)
             this.totalCountries = countries.length
 
-            const medals = data.map((i: ICountry) => i.participations.map((i: IParticipation) => (i.medalsCount)))
+            const medals = data.map((i: Olympic) => i.participations.map((i: Participation) => (i.medalsCount)))
             const sumOfAllMedalsYears = medals.map(i => i.reduce((acc, i) => acc + i, 0))
 
             this.createPieChart(countries, sumOfAllMedalsYears);
@@ -45,8 +44,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.ngUnsubscribe$.next(); //data passed to our subscriber
-    this.ngUnsubscribe$.unsubscribe();
+    if(this.ngUnsubscribe) return this.ngUnsubscribe.unsubscribe();
   }
 
   createPieChart(countries: string[], sumOfAllMedalsYears: number[]) {

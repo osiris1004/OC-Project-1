@@ -1,11 +1,10 @@
-// TODO: create here a typescript interface for an olympic country
 
-import { IParticipation } from "./Participation";
+import { Participation } from "./Participation";
 
 //example of an olympic country:
-export interface ICountry
+export interface Olympic
 {
     id: number,
     country: string,
-    participations: IParticipation[]
+    participations: Participation[]
 }
