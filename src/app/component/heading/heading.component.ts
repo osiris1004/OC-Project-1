@@ -6,13 +6,7 @@ import { IHeading } from 'src/app/core/models/Heading';
   templateUrl: './heading.component.html',
   styleUrls: ['./heading.component.scss']
 })
-export class HeadingComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+export class HeadingComponent {
   @Input("headingInfo")
   public headingInfo!: IHeading;
 }

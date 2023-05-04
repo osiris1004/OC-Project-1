@@ -40,12 +40,12 @@ export class HomeComponent implements OnInit {
         (data) => {
           if (data && data.length > 0) {
             this.totalJOs = Array.from(new Set(data.map(i => i.participations.map(f => f.year)).flat())).length
-            //*
+            
             this.headingInfo.data[1].data = this.totalJOs
 
             const countries: string[] = data.map((i: Olympic) => i.country)
             this.totalCountries = countries.length
-            //*
+            
             this.headingInfo.data[0].data = this.totalCountries
 
             const medals = data.map((i: Olympic) => i.participations.map((i: Participation) => (i.medalsCount)))
