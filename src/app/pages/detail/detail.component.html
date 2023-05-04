@@ -1,15 +1,11 @@
 <div>
-    <div class="heading">
-        <app-heading [headingInfo]="headingInfo"></app-heading>
-    </div>
-
+    <app-heading [headingInfo]="headingInfo"></app-heading>
     <div class="chart-container wrapper-container">
         <div class="container">
             <canvas id="MyLineChart">{{ lineChart }}</canvas>
             <h2>Date</h2>   
         </div>
     </div>
-
     <div class="center">
         <a routerLink="">Go back</a>
     </div>

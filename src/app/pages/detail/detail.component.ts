@@ -21,7 +21,7 @@ export class DetailComponent implements OnInit {
   public totalAthletes: number = 0;
   public error!: string;
   public headingInfo = {
-    headingTitle: this.countryName!,
+    headingTitle: this.countryName,
     data: [
       {
         label: "Number of entries",
@@ -54,6 +54,7 @@ export class DetailComponent implements OnInit {
           if (data && data.length > 0) {
             const selectedCountry = data.find((i: Olympic) => i.country === country) //      
             this.countryName = selectedCountry?.country ?? null
+            this.headingInfo.headingTitle = this.countryName
 
             const participations = selectedCountry?.participations.map((i: Participation) => i)
             this.totalEntries = participations?.length ?? 0
