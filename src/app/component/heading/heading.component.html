@@ -1,0 +1,11 @@
+<div class="heading">
+    <div class="center">
+        <div>{{headingInfo.headingTitle}}</div>
+    </div>
+    <div class="split">
+        <div *ngFor="let item of headingInfo.data">
+            <p>{{item.label}}</p>
+            <p>{{item.data}}</p>
+        </div>
+    </div>
+</div>
