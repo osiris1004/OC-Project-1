@@ -52,7 +52,7 @@ export class DetailComponent implements OnInit {
       .pipe(takeUntil(this.ngUnsubscribe$)).subscribe(
         (data) => {
           if (data && data.length > 0) {
-            const selectedCountry = data.find((i: Olympic) => i.country === country) //      
+            const selectedCountry = data.find((i: Olympic) => i.country === country)       
             this.countryName = selectedCountry?.country ?? null
             this.headingInfo.headingTitle = this.countryName
 
@@ -60,15 +60,15 @@ export class DetailComponent implements OnInit {
             this.totalEntries = participations?.length ?? 0
             this.headingInfo.data[0].data = this.totalEntries
 
-            //#years
+         
             const years = selectedCountry?.participations.map((i: Participation) => i.year) ?? []
 
-            //medals
+           
             const medals = selectedCountry?.participations.map((i: Participation) => i.medalsCount.toString()) ?? []
             this.totalMedals = medals.reduce((accumulator, item) => accumulator + parseInt(item), 0)
             this.headingInfo.data[1].data = this.totalMedals
 
-            //#athletes
+          
             const athletes = selectedCountry?.participations.map((i: Participation) => i.athleteCount.toString()) ?? []
             this.totalAthletes = athletes.reduce((accumulator, item) => accumulator + parseInt(item), 0)
             this.headingInfo.data[2].data = this.totalAthletes

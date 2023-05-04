@@ -1,24 +1,8 @@
 <div class="heading">
     <div class="center">
-        <!-- <div>{{countryName}}</div> -->
         <div>{{headingInfo.headingTitle}}</div>
     </div>
     <div class="split">
-        <!-- <div>
-            <p>Number of entries</p>
-            <p>{{totalEntries}}</p>
-        </div>
-
-        <div>
-            <p>Total Number of medals</p>
-            <p>{{totalMedals}}</p>
-        </div>
-
-        <div>
-            <p>Total Number of athletes</p>
-            <p>{{totalAthletes}}</p>
-        </div> -->
-
         <div *ngFor="let item of headingInfo.data">
             <p>{{item.label}}</p>
             <p>{{item.data}}</p>
