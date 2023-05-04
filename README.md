@@ -43,11 +43,11 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 In RxJS, each time you subscribe to an Observable, you must then unsubscribe. If you don't unsubscribe, the subscription will exist in memory, and whenever the subject emits a value, the subscription logic will execute and hence memory leak.
 
 ## Git Flow
-Git Flow is a branching model for Git, for managing the development and release of software. The Git Flow model consists of two main branches and develop, as well as several supporting branches for feature development, bug fixes, and releases.
+Git Flow is a branching model for Git, for managing the development and release of software. The Git Flow model consists of two main branches, that is the main and develop, as well as several supporting branches for feature development, bug fixes, and releases.
 
 Here is a brief overview of the main branches and supporting branches in the Git Flow model:
 
-1. **main branch**: This is the main branch that contains the stable and production-ready code. The master branch is always kept in a deployable state and represents the latest release version of the software.
+1. **main branch(master branch)**: This is the main branch that contains the stable and production-ready code. The main(master) branch is always kept in a deployable state and represents the latest release version of the software.
 
 2. **develop branch**: This branch is used for ongoing development and is the main integration branch for feature branches. All new development is merged into the develop branch, which is periodically merged into the master branch when a new release is ready.
 
