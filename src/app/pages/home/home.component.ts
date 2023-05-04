@@ -19,6 +19,19 @@ export class HomeComponent implements OnInit {
   public totalJOs: number = 0
   public error!:string
   private  ngUnsubscribe?: Subscription
+  public headingInfo = {
+    headingTitle: "Medals per Country",
+    data: [
+      {
+        label: "Number of countries",
+        data: this.totalCountries
+      },
+      {
+        label: "Number of JOs",
+        data: this.totalJOs
+      },
+    ]
+  }
 
   constructor(private olympicService: OlympicService, private route: Router) { }
 
@@ -27,9 +40,13 @@ export class HomeComponent implements OnInit {
         (data) => {
           if (data && data.length > 0) {
             this.totalJOs = Array.from(new Set(data.map(i => i.participations.map(f => f.year)).flat())).length
+            //*
+            this.headingInfo.data[1].data = this.totalJOs
 
             const countries: string[] = data.map((i: Olympic) => i.country)
             this.totalCountries = countries.length
+            //*
+            this.headingInfo.data[0].data = this.totalCountries
 
             const medals = data.map((i: Olympic) => i.participations.map((i: Participation) => (i.medalsCount)))
             const sumOfAllMedalsYears = medals.map(i => i.reduce((acc, i) => acc + i, 0))
@@ -41,6 +58,8 @@ export class HomeComponent implements OnInit {
           this.error = error.message
         }
       )
+
+     
   }
 
   ngOnDestroy() {
@@ -76,5 +95,8 @@ export class HomeComponent implements OnInit {
     });
     this.pieChart = pieChart
   }
+
+
+
 }
 

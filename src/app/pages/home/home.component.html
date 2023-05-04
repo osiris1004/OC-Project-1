@@ -1,7 +1,10 @@
 <h2>Olympic games app</h2>
 <hr />
-<div class="chart-container">
-    <div class="heading">
+<div>
+    <!--* -->
+    <app-heading [headingInfo]="headingInfo"></app-heading>
+    <!--* -->
+    <!-- <div class="heading">
         <div class="center">
             <div>Medals per Country</div>
         </div>
@@ -15,6 +18,6 @@
                 <p>{{totalCountries }}</p>
             </div>
         </div>
-    </div>
+    </div> -->
     <canvas id="MyPieChart">{{ pieChart }}</canvas>
 </div>

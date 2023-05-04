@@ -20,6 +20,23 @@ export class DetailComponent implements OnInit {
   public totalMedals: number = 0;
   public totalAthletes: number = 0;
   public error!: string;
+  public headingInfo = {
+    headingTitle: this.countryName!,
+    data: [
+      {
+        label: "Number of entries",
+        data: this.totalEntries
+      },
+      {
+        label: "Total Number of medals",
+        data: this.totalMedals
+      },
+      {
+        label: "Total Number of athletes",
+        data: this.totalAthletes
+      },
+    ]
+  }
 
   private readonly ngUnsubscribe$: Subject<void> = new Subject<void>();
 
@@ -40,16 +57,20 @@ export class DetailComponent implements OnInit {
 
             const participations = selectedCountry?.participations.map((i: Participation) => i)
             this.totalEntries = participations?.length ?? 0
+            this.headingInfo.data[0].data = this.totalEntries
+
             //#years
             const years = selectedCountry?.participations.map((i: Participation) => i.year) ?? []
 
             //medals
             const medals = selectedCountry?.participations.map((i: Participation) => i.medalsCount.toString()) ?? []
             this.totalMedals = medals.reduce((accumulator, item) => accumulator + parseInt(item), 0)
+            this.headingInfo.data[1].data = this.totalMedals
 
             //#athletes
             const athletes = selectedCountry?.participations.map((i: Participation) => i.athleteCount.toString()) ?? []
             this.totalAthletes = athletes.reduce((accumulator, item) => accumulator + parseInt(item), 0)
+            this.headingInfo.data[2].data = this.totalAthletes
 
             this.createLineChart(years, medals)
           }
